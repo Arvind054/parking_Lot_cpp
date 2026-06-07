@@ -14,6 +14,7 @@ class Vehicle{
      string regestrationNumber;
      int spotsNeeded;
      VehicleSize size;
+     
      public:
      Vehicle(string regNumber, VehicleSize size){
         this->regestrationNumber = regNumber;
@@ -36,13 +37,41 @@ class Vehicle{
 
 };
 
+// Bus Class
+
+//Constructor for the Vehicles
+// This constructor makes sure that when an object of the class is created it first creates an vehicle Object and with the passed parameters.
+class Bus : public Vehicle{
+    public:
+    Bus(string regNumber): Vehicle(regNumber, VehicleSize ::large){};
+
+   bool canFitInSpot(int size){
+     return size == 5;
+   }
+};
+
+class Car : public Vehicle{
+    public:
+    Car(string regNumber): Vehicle(regNumber, VehicleSize ::medium){};
+
+   bool canFitInSpot(int size){
+     return size == 2;
+   }
+};
+class Bike : public Vehicle{
+    public:
+    Bike(string regNumber): Vehicle(regNumber, VehicleSize ::small){};
+
+   bool canFitInSpot(int size){
+     return size == 1;
+   }
+};
+
+
 int main(){
 
-    Vehicle veh("RJ14B4519", VehicleSize::small);
+   Bus B("RJ141245");
 
-    cout<<veh.getRegNumber()<<endl;
-    cout<<veh.getSpotsNeeded()<<endl;
-
-
+   cout<<B.getRegNumber()<<endl;
    return 0;
 };

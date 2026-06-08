@@ -34,7 +34,9 @@ class Vehicle{
      string getRegNumber(){
         return this->regestrationNumber;
      }
-
+    bool canFitInSpot(VehicleSize spotSize){
+      return size <= spotSize;
+    }
 };
 
 // Bus Class
@@ -45,8 +47,8 @@ class Bus : public Vehicle{
     public:
     Bus(string regNumber): Vehicle(regNumber, VehicleSize ::large){};
 
-   bool canFitInSpot(int size){
-     return size == 5;
+    bool canFitInSpot(VehicleSize spotSize){
+     return this->getVehicleSize() == spotSize;
    }
 };
 
@@ -54,18 +56,88 @@ class Car : public Vehicle{
     public:
     Car(string regNumber): Vehicle(regNumber, VehicleSize ::medium){};
 
-   bool canFitInSpot(int size){
-     return size == 2;
+   bool canFitInSpot(VehicleSize spotSize){
+     return this->getVehicleSize() == spotSize;
    }
 };
 class Bike : public Vehicle{
     public:
     Bike(string regNumber): Vehicle(regNumber, VehicleSize ::small){};
 
-   bool canFitInSpot(int size){
-     return size == 1;
+    bool canFitInSpot(VehicleSize spotSize){
+     return this->getVehicleSize() == spotSize;
    }
 };
+
+
+
+
+
+// Parking Spot
+
+class Level{
+
+};
+
+class ParkingSpot{
+     private:
+     Vehicle* vehicle;
+     VehicleSize spotSize;
+     int row;
+     int spotNumber;
+     Level* level;
+
+     ParkingSpot(Level* level, int row, int spotNumber, VehicleSize spotSize){
+       this->level = level;
+       this->spotSize = spotSize;
+       this->row = row;
+       this->spotNumber = spotNumber;
+       this->vehicle = NULL;
+     }
+
+
+     // Check Wheter parking spot is available or not
+     bool isAvailable(){
+      return this->vehicle == NULL;
+     }
+
+     //Check whether a vehicle can fit in the spot or not
+     bool canFitVehicle(Vehicle& vehicle){
+      return this->isAvailable() && vehicle.canFitInSpot(this->spotSize);    
+    }
+    
+
+    // To park the vehicle
+
+    void parkVehicle(Vehicle* vehicle){
+        if(canFitVehicle(*vehicle)) this->vehicle = vehicle;
+        return ;
+    }
+
+    // TO remove the parked Vehicle
+    
+    void removeVehicle(){
+       this->vehicle = NULL;
+       return ;
+    }
+
+    // To get the Spot size
+    VehicleSize getSpotSize(){
+      return this->spotSize;
+    }
+
+    // To get the row of the parking Spot
+
+    int getSpotRow(){
+      return this->row;
+    }
+
+    // To get the spot number in a given row
+    int getSpotNumber(){
+      return this->spotNumber;
+    }
+};
+
 
 
 int main(){

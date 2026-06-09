@@ -76,7 +76,35 @@ class Bike : public Vehicle{
 // Parking Spot
 
 class Level{
+    private:
+    int levelNumber;
+    vector<ParkingSpot>spots;
 
+    public:
+    Level(int levelNumber, int numSpots){
+          this->levelNumber = levelNumber;
+          spots.resize(numSpots);
+    }
+
+    bool parkVehicle(Vehicle vehicle){
+       for(ParkingSpot& spot: spots){
+        if(spot.canFitVehicle(vehicle)){
+            spot.parkVehicle(&vehicle);
+            return true;
+        }
+       }
+       return false;
+    }
+
+    bool removeVehicle(Vehicle* vehicle){
+        for(ParkingSpot& spot : spots){
+          if(!spot.isAvailable() && spot.getVehicle() == vehicle){
+               spot.removeVehicle();
+               return true;
+          }
+        }
+        return false;
+    }
 };
 
 class ParkingSpot{
@@ -87,6 +115,7 @@ class ParkingSpot{
      int spotNumber;
      Level* level;
 
+     public:
      ParkingSpot(Level* level, int row, int spotNumber, VehicleSize spotSize){
        this->level = level;
        this->spotSize = spotSize;
@@ -135,6 +164,11 @@ class ParkingSpot{
     // To get the spot number in a given row
     int getSpotNumber(){
       return this->spotNumber;
+    }
+
+    // To get the Vehicle
+    Vehicle* getVehicle(){
+       return this->vehicle;
     }
 };
 

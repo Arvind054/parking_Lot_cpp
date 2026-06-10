@@ -172,12 +172,35 @@ class ParkingSpot{
     }
 };
 
+// Parking Lot Class
 
+class ParkingLot{
+   vector<Level>levels;
+   public:
+    ParkingLot(int totalLevels, int spotsPerLevel){
+         levels.resize(totalLevels);
+         for(int i = 0; i<totalLevels; i++){
+            levels[i] = Level(i,spotsPerLevel);
+         }
+    }
+    bool parkVehicle(Vehicle* vehicle){
+            for(auto& level: levels){
+               if(level.parkVehicle(*vehicle)){
+                  return true;
+               }
+            }
+            return false;
+   }
+   bool removeVehicle(Vehicle* vehicle){
+      for(auto& level: levels){
+         if(level.removeVehicle(vehicle)){
+            return true;
+         }
+      }
+      return false;
+   }
+};
 
 int main(){
-
-   Bus B("RJ141245");
-
-   cout<<B.getRegNumber()<<endl;
    return 0;
 };

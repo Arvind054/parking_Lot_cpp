@@ -229,6 +229,18 @@ class Ticket{
 };
 
 
+class Payment{
+   public:
+   double calculateFees(Ticket ticket){
+      double duration  = ticket.getDuration();
+      return duration/3600.0;
+   }
+   void processPayment(Ticket ticket){
+         double fees = calculateFees(ticket);
+         cout<<"Payment Complete For the: Rs. "<<fees<<endl;
+   }
+};
+
 int main(){
    return 0;
 };

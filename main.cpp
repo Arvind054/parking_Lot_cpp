@@ -223,7 +223,7 @@ class Ticket{
    }
 
    int64_t getDuration(){
-      chrono::duration<int64_t> duration = exitTime-entryTime;
+      auto duration = chrono::duration_cast<chrono::seconds>(exitTime - entryTime);
       return duration.count();
    }
 };

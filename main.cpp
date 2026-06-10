@@ -1,4 +1,7 @@
 #include<bits/stdc++.h>
+#include <ctime>
+#include <chrono>
+#include <cstdint>
 using namespace std;
 
 // Enum for vehicle Sizes
@@ -200,6 +203,31 @@ class ParkingLot{
       return false;
    }
 };
+
+// Ticket Class
+
+class Ticket{
+   private:
+   Vehicle* vehicle;
+   chrono::time_point<chrono::system_clock> entryTime;
+   chrono::time_point<chrono::system_clock> exitTime;
+
+   public:
+   Ticket(Vehicle* vehicle){
+      this->vehicle = vehicle;
+      this->entryTime = chrono::system_clock::now();
+   }
+
+   void setExitTime(){
+      this->exitTime = chrono::system_clock::now();
+   }
+
+   int64_t getDuration(){
+      chrono::duration<int64_t> duration = exitTime-entryTime;
+      return duration.count();
+   }
+};
+
 
 int main(){
    return 0;
